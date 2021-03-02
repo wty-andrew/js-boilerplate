@@ -26,8 +26,7 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile
+        run: yarn --prefer-offline
 
       - name: Build
         run: yarn build
@@ -60,11 +59,10 @@ jobs:
             ${{ runner.os }}-yarn-
 
       - name: Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile
+        run: yarn --prefer-offline
 
       - name: Build Storybook
-        run: yarn build-storybook
+        run: yarn run build-storybook
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.0.0
