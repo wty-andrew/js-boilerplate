@@ -33,7 +33,7 @@ jobs:
 
       - name: Set release filename
         id: set-filename
-        run: echo ::set-output name=filename::${{ github.event.repository.name }}-${{ github.event.release.tag_name }}.tgz
+        run: echo ::set-output name=filename::${{ github.event.repository.name }}-${GITHUB_REF#refs/tags/}.tgz
 
       - name: Build release
         run: yarn pack --filename=${{ steps.set-filename.outputs.filename }}
