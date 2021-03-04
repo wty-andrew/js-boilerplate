@@ -75,7 +75,7 @@ jobs:
 
       - name: Set release filename
         id: release-filename
-        run: echo ::set-output name=filename::${{ github.event.repository.name }}-${{GITHUB_REF#refs/tags/}}.tgz
+        run: echo ::set-output name=filename::${{ github.event.repository.name }}-${${{ github.ref }}#refs/tags/}.tgz
 
       - name: Build release
         run: yarn pack --filename=${{ steps.release-filename.outputs.filename }}
