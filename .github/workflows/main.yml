@@ -1,9 +1,9 @@
-name: CI
+name: Main
 
 on: push
 
 jobs:
-  build-and-test:
+  test-and-build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -33,3 +33,15 @@ jobs:
 
       - name: Test
         run: yarn test
+
+      - name: Build storybook
+        id: build-storybook
+        if: github.ref == 'refs/heads/master'
+        run: yarn build-storybook
+
+      - name: Deploy gh-pages
+        if: steps.build-storybook.outcome == 'success'
+        uses: JamesIves/github-pages-deploy-action@4.0.0
+        with:
+          branch: gh-pages
+          folder: storybook-static

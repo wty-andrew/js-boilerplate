@@ -31,12 +31,15 @@ jobs:
       - name: Install dependencies
         run: yarn --prefer-offline --frozen-lockfile
 
+      - name: Test
+        run: yarn test
+
       - name: Set release filename
-        id: set-filename
-        run: echo ::set-output name=filename::${{ github.event.repository.name }}-${GITHUB_REF#refs/tags/}.tgz
+        id: release-filename
+        run: echo ::set-output name=filename::${{ github.event.repository.name }}-${{ github.ref }}.tgz
 
       - name: Build release
-        run: yarn pack --filename=${{ steps.set-filename.outputs.filename }}
+        run: yarn pack --filename=${{ steps.release-filename.outputs.filename }}
 
       - name: Create release
         id: create-release
